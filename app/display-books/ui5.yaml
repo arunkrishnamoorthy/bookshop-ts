@@ -4,7 +4,7 @@ metadata:
 type: application
 customConfiguration:
   cds-plugin-ui5:
-    mountPath: display-books/webapp
+    mountPath: /display-books/webapp
 server:
   customMiddleware:
     - name: fiori-tools-appreload
