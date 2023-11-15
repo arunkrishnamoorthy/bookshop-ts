@@ -1,25 +1,31 @@
-# Getting Started
-
-Welcome to your new project.
-
-It contains these folders and files, following our recommended project layout:
+## Structure
 
 File or Folder | Purpose
 ---------|----------
 `app/` | content for UI frontends goes here
-`db/` | your domain models and data go here
-`srv/` | your service models and code go here
+`aprouter/` | approuter goes here
+`db/` | domain models and data go here
+`srv/` | service models and code go here
+`mta.yaml` | build configuration for deployment to BTP
 `package.json` | project metadata and configuration
-`readme.md` | this getting started guide
+`readme.md` | this guide
 
 
-## Next Steps
+## Run locally
 
-- Open a new terminal and run `cds watch` 
-- (in VS Code simply choose _**Terminal** > Run Task > cds watch_)
-- Start adding content, for example, a [db/schema.cds](db/schema.cds).
+Only needed after MTA was built:\
+Run `npm i`
 
+Start CAP app in one terminal:\
+Run `npm run hybrid`
 
-## Learn More
+Start approuter in another terminal:\
+Run `npm run approuter`
 
-Learn more at https://cap.cloud.sap/docs/get-started/.
+## Build MTA
+
+Run `mbt build`
+
+## Deploy to BTP
+
+Run `cf deploy mta_archives/bookshop-ts_1.0.0.mtar`

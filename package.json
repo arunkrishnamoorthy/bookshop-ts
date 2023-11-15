@@ -9,20 +9,36 @@
     "@sap/cds": "^7",
     "express": "^4",
     "@sap/xssec": "^3",
-    "passport": "^0"
+    "passport": "^0",
+    "@cap-js/sqlite": "^1.3.1",
+    "sqlite3": "^5.1.6"
   },
   "devDependencies": {
     "@cap-js/cds-typer": "^0",
-    "@cap-js/sqlite": "^1.3.1",
-    "cds-plugin-ui5": "^0.6.13"
+    "cds-plugin-ui5": "^0.6.13",
+    "@sap/cds-dk": "^7",
+    "rimraf": "^3.0.2"
   },
   "scripts": {
+    "start": "cds-serve",
     "approuter": "cds bind --exec -- npm start --prefix approuter",
-    "hybrid": "cds-ts watch --profile hybrid"
+    "hybrid": "cds-ts watch --profile hybrid",
+    "build:cf": "npm run build:cds && npm run cleanup:ts && npm run build:ts",
+    "build:ts": "tsc",
+    "build:cds": "cds build --production",
+    "cleanup:ts": "npx rimraf gen/srv/srv/**/*.ts"
   },
   "cds": {
+    "features": {
+      "in_memory_db": true
+    },
     "requires": {
-      "db": "sql",
+      "db": {
+        "kind": "sqlite",
+        "credentials": {
+          "database": ":memory:"
+        }
+      },
       "[development]": {
         "auth": {
           "kind": "basic",
@@ -44,11 +60,13 @@
       },
       "[hybrid]": {
         "auth": "xsuaa"
+      },
+      "[production]": {
+        "auth": "xsuaa"
       }
     }
   },
   "workspaces": [
-    "approuter",
     "app/*"
   ],
   "sapux": [
